@@ -1,30 +1,30 @@
 import React from "react";
 import { StyleSheet, View, Text, ImageBackground } from "react-native";
-//import InputField from "../copmonents/InputField";
-//import MainButton from "../copmonents/MainButton";
+import InputField from "../components/InputField";
+import BigButton from "../components/BigButton";
 import { useFonts } from "expo-font";
 import Avatar from "../components/Avatar";
 import bgImage from "../../assets/Photo BG.png";
 
 export default function RegistrationScreen() {
-  //   const [fontsLoaded] = useFonts({
-  //     "Roboto-Regular": require("../../assets/fonts/Roboto_Condensed-Regular.ttf"),
-  //     "Roboto-Medium": require("../../assets/fonts/Roboto_Condensed-Medium.ttf"),
-  //   });
+  const [fontsLoaded] = useFonts({
+    "Roboto-Regular": require("../../assets/fonts/Roboto_Condensed-Regular.ttf"),
+    "Roboto-Medium": require("../../assets/fonts/Roboto_Condensed-Medium.ttf"),
+  });
 
-  //   if (!fontsLoaded) {
-  //     return null;
-  //   }
+  if (!fontsLoaded) {
+    return null;
+  }
   return (
     <ImageBackground source={bgImage} resizeMode="cover" style={styles.image}>
       <View style={styles.container}>
         <View style={styles.containerForm}>
           <Avatar />
           <Text style={styles.titleText}>Реєстрація</Text>
-          {/* <InputField placeholder="Логін" />
+          <InputField placeholder="Логін" />
           <InputField placeholder="Адреса електронної пошти" />
           <InputField placeholder="Пароль" isTextShow={true} />
-          <MainButton textButton="Зареєструватися" /> */}
+          <BigButton textButton="Зареєструватися" />
           <Text style={styles.smallText}>Вже є аккаунт? Увійти</Text>
         </View>
       </View>
