@@ -1,21 +1,13 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import RegistrationScreen from "./src/screens/RegistrationScreen";
+import RegistrationScreen from "./screens/RegistrationScreen";
+import HomeIndicator from "./copmonents/HomeIndicator";
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <>
       <RegistrationScreen />
       <StatusBar style="auto" />
-    </View>
+      <HomeIndicator />
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

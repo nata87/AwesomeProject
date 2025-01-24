@@ -1,11 +1,11 @@
 import React from "react";
 import { Pressable, Text, StyleSheet } from "react-native";
 
-export default function BigButton({ textButton }) {
+export default function MainButton({ textButton }) {
   return (
     <Pressable
       style={styles.button}
-      onPress={() => console.log("press on button")}
+      onPress={() => console.log("press on btn")}
     >
       <Text style={styles.textButton}>{textButton}</Text>
     </Pressable>
