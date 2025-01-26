@@ -1,10 +1,12 @@
 import React from 'react';
 import { Pressable, Text, StyleSheet } from 'react-native';
-import { colors } from '../../styles/global';
 
-export default function MainButton({ textButton, data }) {
+export default function MainButton({ textButton }) {
   return (
-    <Pressable style={styles.button} onPress={data}>
+    <Pressable
+      style={styles.button}
+      onPress={() => console.log('press on btn')}
+    >
       <Text style={styles.textButton}>{textButton}</Text>
     </Pressable>
   );
@@ -12,18 +14,18 @@ export default function MainButton({ textButton, data }) {
 
 const styles = StyleSheet.create({
   button: {
-    width: '100%',
+    width: 343,
     height: 51,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 43,
     marginBottom: 16,
 
-    backgroundColor: colors.orange,
+    backgroundColor: '#FF6C00',
     borderRadius: 100,
   },
   textButton: {
-    color: colors.white,
+    color: 'white',
     fontFamily: 'Roboto-Regular',
     fontSize: 16,
   },

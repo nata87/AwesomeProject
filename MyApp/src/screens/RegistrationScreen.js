@@ -15,28 +15,6 @@ import bgImage from '../../assets/images/Photo BG.png';
 import { colors } from '../../styles/global';
 
 export default function RegistrationScreen() {
-  const [formData, setFormdata] = useState({
-    login: '',
-    email: '',
-    password: '',
-  });
-
-  const [isPasswordVisible, setIsPasswordVisible] = useState(true);
-
-  const showPassword = () => {
-    setIsPasswordVisible(prevState => !prevState);
-  };
-
-  const consolData = () => {
-    console.log(formData);
-  };
-
-  const handleInputChange = (value, inputName) => {
-    setFormdata(prevState => ({
-      ...prevState,
-      [inputName]: value,
-    }));
-  };
 
   const [fontsLoaded] = useFonts({
     'Roboto-Regular': require('../../assets/fonts/Roboto_Condensed-Regular.ttf'),
@@ -59,25 +37,22 @@ export default function RegistrationScreen() {
             <AvatarPlace />
             <View style={styles.containerInput}>
               <InputField
-                onChangeText={value => handleInputChange(value, 'login')}
+                
                 placeholder='Логін'
-                value={formData.login}
+                
               />
               <InputField
                 placeholder='Адреса електронної пошти'
-                onChangeText={value => handleInputChange(value, 'email')}
-                value={formData.email}
+                
               />
               <InputField
                 placeholder='Пароль'
-                onChangeText={value => handleInputChange(value, 'password')}
-                value={formData.password}
-                isPasswordVisible={isPasswordVisible}
+                
                 isShowButton={true}
-                showPassword={showPassword}
+               
               />
             </View>
-            <MainButton textButton='Зареєструватися' data={consolData} />
+            <MainButton textButton='Зареєструватися' />
             <Text style={styles.smallText}>Вже є аккаунт? Увійти</Text>
           </View>
         </ImageBackground>
@@ -106,6 +81,7 @@ const styles = StyleSheet.create({
 
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
+  
   },
 
   containerInput: {

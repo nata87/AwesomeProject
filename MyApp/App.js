@@ -5,7 +5,6 @@ import HomeIndicator from './src/copmonents/HomeIndicator';
 export default function App() {
   return (
     <>   
-    
       {<RegistrationScreen />}
       <StatusBar style='auto' />
       <HomeIndicator />
