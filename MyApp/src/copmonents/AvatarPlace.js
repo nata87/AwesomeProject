@@ -1,7 +1,8 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
-import SmallButton from "./SmallButton";
-import iconPlus from "../assets/images/Plus.png";
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import SmallButton from './SmallButton';
+import iconPlus from '../../assets/images/Plus.png';
+import { colors } from '../../styles/global';
 
 export default function AvatarPlace() {
   return (
@@ -15,12 +16,12 @@ const styles = StyleSheet.create({
   containerAvatar: {
     width: 120,
     height: 120,
-    backgroundColor: "#F6F6F6",
+    backgroundColor: colors.light_gray,
     borderRadius: 16,
 
-    position: "absolute",
+    position: 'absolute',
     top: -60,
-    left: "50%",
+    left: '50%',
     transform: [{ translateX: -60 }],
   },
-});
+}); 
