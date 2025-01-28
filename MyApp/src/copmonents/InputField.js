@@ -1,15 +1,40 @@
-import React from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import React, { useState } from 'react';
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { colors } from '../../styles/global';
 
-export default function InputField({ placeholder, isTextShow }) {
+export default function InputField({
+  placeholder,
+  isPasswordVisible,
+  isShowButton,
+  onChangeText,
+  showPassword,
+}) {
+  const [isFocused, setIsFocused] = useState(false);
+  const onFocus = () => {
+    setIsFocused(true);
+  };
+  const onBlur = () => {
+    setIsFocused(false);
+  };
+
   return (
-    <View style={styles.inputContainer}>
+    <View style={[styles.inputContainer, isFocused && styles.focusedInput]}>
       <TextInput
+        onFocus={onFocus}
+        onBlur={onBlur}
+        onChangeText={onChangeText}
         style={styles.input}
         placeholder={placeholder}
         placeholderTextColor='#BDBDBD'
+        secureTextEntry={isPasswordVisible}
       />
-      {isTextShow && <Text style={styles.textShowPassword}>Показати</Text>}
+      {isShowButton && (
+        <Pressable style={styles.button} onPress={showPassword}>
+          <Text style={styles.textShowPassword}>
+            {isPasswordVisible ? 'Показати' : 'Приховати'}
+          </Text>
+        </Pressable>
+      )}
     </View>
   );
 }
@@ -19,16 +44,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
 
-    width: 343,
+    width: '100%',
     height: 50,
-    marginBottom: 16,
     paddingRight: 16,
     paddingLeft: 16,
 
-    backgroundColor: '#F6F6F6',
+    backgroundColor: colors.light_gray,
     borderWidth: 1,
-    borderColor: '#E8E8E8',
+    borderColor: colors.border_gray,
     borderRadius: 8,
+  },
+  focusedInput: {
+    borderColor: colors.orange,
+    color: colors.black_primary,
   },
 
   input: {
@@ -41,6 +69,6 @@ const styles = StyleSheet.create({
   textShowPassword: {
     fontFamily: 'Roboto-Regular',
     fontSize: 16,
-    color: '#1B4371',
+    color: colors.blue,
   },
 });

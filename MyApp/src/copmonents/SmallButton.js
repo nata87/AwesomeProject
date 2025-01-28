@@ -1,5 +1,7 @@
 import React from 'react';
 import { Pressable, StyleSheet, Image } from 'react-native';
+import { colors } from '../../styles/global';
+
 
 export default function SmallButton({ icon }) {
   return (
@@ -24,8 +26,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
 
-    borderColor: '#FF6C00',
-    backgroundColor: '#FFFFFF',
+    borderColor: colors.orange,
+    backgroundColor: colors.white,
     borderRadius: 100,
     borderWidth: 1,
   },
