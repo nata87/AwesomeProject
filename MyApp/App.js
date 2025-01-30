@@ -1,15 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import RegistrationScreen from './src/screens/RegistrationScreen';
-import LoginScreen from './src/screens/LoginScreen';
-import HomeIndicator from './src/copmonents/HomeIndicator';
+import "react-native-gesture-handler";
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
+import { useFonts } from "expo-font";
+import LoginScreen from "./src/screens/LoginScreen";
+import AuthNavigator from "./src/navigation/AuthNavigation";
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    "Roboto-Regular": require("./assets/fonts/Roboto_Condensed-Regular.ttf"),
+    "Roboto-Medium": require("./assets/fonts/Roboto_Condensed-Medium.ttf"),
+    "Roboto-Bold": require("./assets/fonts/Roboto_Condensed-Bold.ttf"),
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
-    <>
-      <LoginScreen />
-      <RegistrationScreen /> 
-      <StatusBar style='auto' />
-      <HomeIndicator />
-    </>
+    <NavigationContainer>
+      <AuthNavigator />
+      <StatusBar style="auto" backgroundColor="trasparent" />
+    </NavigationContainer>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -6,79 +6,77 @@ import {
   ImageBackground,
   TouchableWithoutFeedback,
   Keyboard,
-} from 'react-native';
-import { useFonts } from 'expo-font';
-import InputField from '../../src/copmonents/InputField';
-import MainButton from '../../src/copmonents/MainButton';
-import AvatarPlace from '../../src/copmonents/AvatarPlace';
-import bgImage from '../../assets/images/Photo BG.png';
-import { colors } from '../../styles/global';
+} from "react-native";
+import InputField from "../../src/components/InputField";
+import MainButton from "../../src/components/MainButton";
+import bgImage from "../../assets/images/Photo BG.png";
+import { colors } from "../../styles/global";
 
-export default function RegistrationScreen() {
+export default function LoginScreenScreen({ route, navigation }) {
   const [formData, setFormdata] = useState({
-    login: '',
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
 
   const showPassword = () => {
-    setIsPasswordVisible(prevState => !prevState);
-  };
-
-  const consolData = () => {
-    console.log(formData);
+    setIsPasswordVisible((prevState) => !prevState);
   };
 
   const handleInputChange = (value, inputName) => {
-    setFormdata(prevState => ({
+    setFormdata((prevState) => ({
       ...prevState,
       [inputName]: value,
     }));
   };
 
-  const [fontsLoaded] = useFonts({
-    'Roboto-Regular': require('../../assets/fonts/Roboto_Condensed-Regular.ttf'),
-    'Roboto-Medium': require('../../assets/fonts/Roboto_Condensed-Medium.ttf'),
-  });
+  const onSignUp = () => {
+    navigation.navigate("SignUp", {
+      email: formData.email,
+      password: formData.password,
+    });
+  };
 
-  if (!fontsLoaded) {
-    return null;
-  }
+  const onHome = () => {
+    navigation.navigate("Home", {
+      email: formData.email,
+      password: formData.password,
+    });
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.wrapper}>
         <ImageBackground
           source={bgImage}
-          resizeMode='cover'
+          resizeMode="cover"
           style={styles.image}
         >
           <View style={styles.containerForm}>
-            <Text style={styles.titleText}>Реєстрація</Text>
-            <AvatarPlace />
+            <Text style={styles.titleText}>Увійти</Text>
             <View style={styles.containerInput}>
               <InputField
-                onChangeText={value => handleInputChange(value, 'login')}
-                placeholder='Логін'
-                value={formData.login}
-              />
-              <InputField
-                placeholder='Адреса електронної пошти'
-                onChangeText={value => handleInputChange(value, 'email')}
+                placeholder="Адреса електронної пошти"
+                onChangeText={(value) => handleInputChange(value, "email")}
                 value={formData.email}
               />
               <InputField
-                placeholder='Пароль'
-                onChangeText={value => handleInputChange(value, 'password')}
+                placeholder="Пароль"
+                onChangeText={(value) => handleInputChange(value, "password")}
                 value={formData.password}
                 isPasswordVisible={isPasswordVisible}
                 isShowButton={true}
                 showPassword={showPassword}
               />
             </View>
-            <MainButton textButton='Зареєструватися' data={consolData} />
-            <Text style={styles.smallText}>Вже є аккаунт? Увійти</Text>
+            <MainButton textButton="Увійти" onPress={onHome} />
+            <Text style={styles.smallText}>
+              Немає акаунту?
+              <TouchableWithoutFeedback onPress={onSignUp}>
+                <Text style={styles.signUpText}> Зареєструватися</Text>
+              </TouchableWithoutFeedback>
+            </Text>
           </View>
         </ImageBackground>
       </View>
@@ -92,34 +90,37 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    width: '100%',
-    height: '100%',
-    justifyContent: 'flex-end',
+    width: "100%",
+    height: "100%",
+    justifyContent: "flex-end",
   },
   containerForm: {
-    position: 'relative',
-    alignItems: 'center',
-    width: '100%',
-    height: 549,
-    backgroundColor: 'white',
-    padding:16,
+    position: "relative",
+    alignItems: "center",
+    width: "100%",
+    height: 489,
+    paddingLeft: 16,
+    paddingRight: 16,
+
+    backgroundColor: colors.white,
+
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
   },
 
   containerInput: {
-    alignItems: 'center',
+    alignItems: "center",
     gap: 16,
   },
 
   titleText: {
-    marginTop: 92,
+    marginTop: 32,
     marginBottom: 32,
-    fontFamily: 'Roboto-Medium',
+    fontFamily: "Roboto-Medium",
     fontSize: 30,
   },
   smallText: {
-    fontFamily: 'Roboto-Regular',
+    fontFamily: "Roboto-Regular",
     fontSize: 16,
     color: colors.blue,
   },
