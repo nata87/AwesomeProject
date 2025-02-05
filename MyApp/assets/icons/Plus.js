@@ -1,19 +1,19 @@
-import * as React from "react";
-import Svg, { SvgProps, Path } from "react-native-svg";
-const LogOut = (props) => (
+import * as React from 'react';
+import Svg, { Path } from 'react-native-svg';
+const Plus = props => (
   <Svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={24}
-    height={24}
-    fill="none"
+    xmlns='http://www.w3.org/2000/svg'
+    width={14}
+    height={14}
+    fill='none'
     {...props}
   >
     <Path
-      stroke="#BDBDBD"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M10 22H5a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h5M17 16l4-4-4-4M21 12H9"
+      stroke={props.stroke || 'rgba(33, 33, 33, 0.8)'}
+      strokeWidth={0.7}
+      fill='none'
+      d='M7.5.5h-1v6h-6v1h6v6h1v-6h6v-1h-6v-6Z'
     />
   </Svg>
 );
-export default LogOut;
+export default Plus;

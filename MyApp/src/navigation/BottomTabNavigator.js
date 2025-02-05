@@ -1,33 +1,33 @@
-import { StyleSheet, TouchableOpacity, Text } from "react-native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { colors } from "../../styles/global";
-import ProfileScreen from "../screens/ProfileScreen";
-import PostsScreen from "../screens/PostsScreen";
-import FooterGrid from "../../assets/icons/FooterGrid";
-import User from "../../assets/icons/User";
-import CreatePostsScreen from "../screens/CreatePostScreen";
-import Plus from "../../assets/icons/Plus";
-import TabIcon from "../components/TabIcon";
-import LogOut from "../../assets/icons/LogOut";
-import GoBack from "../../assets/icons/GoBack";
+import { StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { colors } from '../../styles/global';
+import ProfileScreen from '../screens/ProfileScreen';
+import PostsScreen from '../screens/PostsScreen';
+import FooterGrid from '../../assets/icons/FooterGrid';
+import User from '../../assets/icons/User';
+import CreatePostsScreen from '../screens/CreatePostsScreen';
+import Plus from '../../assets/icons/Plus';
+import TabIcon from '../components/TabIcon';
+import LogOut from '../../assets/icons/LogOut';
+import GoBack from '../../assets/icons/GoBack';
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Posts"
+      initialRouteName='Profile'
       screenOptions={({ navigation }) => ({
         headerShown: true,
-        headerTitleAlign: "center",
+        headerTitleAlign: 'center',
         headerStyle: {
           backgroundColor: colors.white,
           height: 83,
         },
         headerTitleStyle: {
           fontSize: 16,
-          color: "#333",
-          fontFamily: "Roboto-Medium",
+          color: '#333',
+          fontFamily: 'Roboto-Medium',
         },
         tabBarShowLabel: false,
         tabBarStyle: {
@@ -40,13 +40,13 @@ const BottomTabNavigator = () => {
       })}
     >
       <Tab.Screen
-        name="Posts"
+        name='Posts'
         component={PostsScreen}
         options={({ navigation }) => ({
-          title: "Публікації",
+          title: 'Публікації',
           headerRight: () => (
             <TouchableOpacity style={{ marginRight: 16 }}>
-              <LogOut onPress={() => navigation.navigate("Login")} />
+              <LogOut onPress={() => navigation.navigate('Login')} />
             </TouchableOpacity>
           ),
           tabBarShowLabel: false,
@@ -56,10 +56,10 @@ const BottomTabNavigator = () => {
         })}
       />
       <Tab.Screen
-        name="CreatePost"
+        name='CreatePost'
         component={CreatePostsScreen}
         options={({ navigation }) => ({
-          title: "Створити публікацію",
+          title: 'Створити публікацію',
           headerLeft: () => (
             <TouchableOpacity
               style={{ marginLeft: 16 }}
@@ -70,14 +70,14 @@ const BottomTabNavigator = () => {
           ),
 
           tabBarShowLabel: false,
-          tabBarStyle: { display: "none" },
+          tabBarStyle: { display: 'none' },
           tabBarIcon: ({ focused }) => (
             <TabIcon icon={Plus} focused={focused} />
           ),
         })}
       />
       <Tab.Screen
-        name="Profile"
+        name='Profile'
         component={ProfileScreen}
         options={{
           headerShown: false,
@@ -97,16 +97,16 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 20,
     backgroundColor: colors.orange,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   iconContainer: {
     width: 70,
     height: 40,
     borderRadius: 20,
     backgroundColor: colors.light_gray,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   focusedContainer: {
     backgroundColor: colors.orange,
@@ -114,10 +114,10 @@ const styles = StyleSheet.create({
   text: {
     flex: 1,
 
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 16,
-    color: "#333",
-    fontFamily: "Roboto-Medium",
+    color: '#333',
+    fontFamily: 'Roboto-Medium',
   },
 });
 

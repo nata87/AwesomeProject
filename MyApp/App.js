@@ -1,16 +1,15 @@
-import "react-native-gesture-handler";
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { StatusBar } from "expo-status-bar";
-import { useFonts } from "expo-font";
-import LoginScreen from "./src/screens/LoginScreen";
-import AuthNavigator from "./src/navigation/AuthNavigation";
+import 'react-native-gesture-handler';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { StatusBar } from 'expo-status-bar';
+import { useFonts } from 'expo-font';
+import AuthNavigator from './src/navigation/AuthNavigation';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    "Roboto-Regular": require("./assets/fonts/Roboto_Condensed-Regular.ttf"),
-    "Roboto-Medium": require("./assets/fonts/Roboto_Condensed-Medium.ttf"),
-    "Roboto-Bold": require("./assets/fonts/Roboto_Condensed-Bold.ttf"),
+    'Roboto-Regular': require('./assets/fonts/Roboto_Condensed-Regular.ttf'),
+    'Roboto-Medium': require('./assets/fonts/Roboto_Condensed-Medium.ttf'),
+    'Roboto-Bold': require('./assets/fonts/Roboto_Condensed-Bold.ttf'),
   });
 
   if (!fontsLoaded) {
@@ -20,7 +19,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <AuthNavigator />
-      <StatusBar style="auto" backgroundColor="trasparent" />
+      <StatusBar style='auto' backgroundColor='transparent' />
     </NavigationContainer>
   );
 }

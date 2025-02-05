@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,44 +6,41 @@ import {
   ImageBackground,
   TouchableWithoutFeedback,
   Keyboard,
-} from "react-native";
-import InputField from "../../src/components/InputField";
-import MainButton from "../../src/components/MainButton";
-import AvatarPlace from "../../src/components/AvatarPlace";
-import bgImage from "../../assets/images/Photo BG.png";
-import { colors } from "../../styles/global";
-import ІconPlus from "../../assets/icons/PlusInCircle";
+} from 'react-native';
+import InputField from '../../src/components/InputField';
+import MainButton from '../../src/components/MainButton';
+import AvatarPlace from '../../src/components/AvatarPlace';
+import bgImage from '../../assets/images/Photo BG.png';
+import { colors } from '../../styles/global';
+import ІconPlus from '../../assets/icons/PlusInCircle';
 
 export default function RegistrationScreen({ route, navigation }) {
   const [formData, setFormdata] = useState({
-    login: "",
-    email: "",
-    password: "",
+    login: '',
+    email: '',
+    password: '',
   });
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
 
   const showPassword = () => {
-    setIsPasswordVisible((prevState) => !prevState);
+    setIsPasswordVisible(prevState => !prevState);
   };
 
   const handleInputChange = (value, inputName) => {
-    setFormdata((prevState) => ({
+    setFormdata(prevState => ({
       ...prevState,
       [inputName]: value,
     }));
   };
-
   const onLogin = () => {
-    navigation.navigate("Login", {
+    navigation.navigate('Login', {
       email: formData.email,
       password: formData.password,
     });
   };
-
   const onHome = () => {
-    console.log("press home");
-    navigation.navigate("Home", {
+    navigation.navigate('Home', {
       email: formData.email,
       password: formData.password,
     });
@@ -54,7 +51,7 @@ export default function RegistrationScreen({ route, navigation }) {
       <View style={styles.wrapper}>
         <ImageBackground
           source={bgImage}
-          resizeMode="cover"
+          resizeMode='cover'
           style={styles.image}
         >
           <View style={styles.containerForm}>
@@ -62,25 +59,25 @@ export default function RegistrationScreen({ route, navigation }) {
             <AvatarPlace icon={<ІconPlus />} />
             <View style={styles.containerInput}>
               <InputField
-                onChangeText={(value) => handleInputChange(value, "login")}
-                placeholder="Логін"
+                onChangeText={value => handleInputChange(value, 'login')}
+                placeholder='Логін'
                 value={formData.login}
               />
               <InputField
-                placeholder="Адреса електронної пошти"
-                onChangeText={(value) => handleInputChange(value, "email")}
+                placeholder='Адреса електронної пошти'
+                onChangeText={value => handleInputChange(value, 'email')}
                 value={formData.email}
               />
               <InputField
-                placeholder="Пароль"
-                onChangeText={(value) => handleInputChange(value, "password")}
+                placeholder='Пароль'
+                onChangeText={value => handleInputChange(value, 'password')}
                 value={formData.password}
                 isPasswordVisible={isPasswordVisible}
                 isShowButton={true}
                 showPassword={showPassword}
               />
             </View>
-            <MainButton textButton="Зареєструватися" onPress={onHome} />
+            <MainButton textButton='Зареєструватися' onPress={onHome} />
             <Text style={styles.smallText}>
               Вже є аккаунт?
               <TouchableWithoutFeedback onPress={onLogin}>
@@ -100,36 +97,36 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    width: "100%",
-    height: "100%",
-    justifyContent: "flex-end",
+    width: '100%',
+    height: '100%',
+    justifyContent: 'flex-end',
   },
   containerForm: {
-    position: "relative",
-    alignItems: "center",
-    width: "100%",
+    position: 'relative',
+    alignItems: 'center',
+    width: '100%',
     height: 549,
     paddingLeft: 16,
     paddingRight: 16,
-    backgroundColor: "white",
+    backgroundColor: 'white',
 
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
   },
 
   containerInput: {
-    alignItems: "center",
+    alignItems: 'center',
     gap: 16,
   },
 
   titleText: {
     marginTop: 92,
     marginBottom: 32,
-    fontFamily: "Roboto-Medium",
+    fontFamily: 'Roboto-Medium',
     fontSize: 30,
   },
   smallText: {
-    fontFamily: "Roboto-Regular",
+    fontFamily: 'Roboto-Regular',
     fontSize: 16,
     color: colors.blue,
   },
