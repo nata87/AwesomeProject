@@ -86,9 +86,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.anonymous.MyApp'
+    namespace 'process.env.EXPO_PUBLIC_ANDROID_PACKAGE'
     defaultConfig {
-        applicationId 'com.anonymous.MyApp'
+        applicationId 'process.env.EXPO_PUBLIC_ANDROID_PACKAGE'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

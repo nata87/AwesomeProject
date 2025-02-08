@@ -10,14 +10,21 @@ import Plus from '../../assets/icons/Plus';
 import TabIcon from '../components/TabIcon';
 import LogOut from '../../assets/icons/LogOut';
 import GoBack from '../../assets/icons/GoBack';
+import { logoutDB } from '../utils/auth';
+import { useDispatch } from 'react-redux';
+import CommentsScreen from '../screens/CommentsScreen';
+import MapScreen from '../screens/MapScreen';
 
 const Tab = createBottomTabNavigator();
 
+
 const BottomTabNavigator = () => {
+  const dispatch = useDispatch();
+
   return (
     <Tab.Navigator
-      initialRouteName='Profile'
-      screenOptions={({ navigation }) => ({
+      initialRouteName='Posts'
+      screenOptions={({ }) => ({
         headerShown: true,
         headerTitleAlign: 'center',
         headerStyle: {
@@ -33,29 +40,33 @@ const BottomTabNavigator = () => {
         tabBarStyle: {
           paddingLeft: 82,
           paddingRight: 82,
-
           paddingTop: 8,
           paddingBottom: 8,
+          display: 'flex',
         },
       })}
     >
       <Tab.Screen
         name='Posts'
         component={PostsScreen}
-        options={({ navigation }) => ({
+        options={({ }) => ({
           title: 'Публікації',
           headerRight: () => (
-            <TouchableOpacity style={{ marginRight: 16 }}>
-              <LogOut onPress={() => navigation.navigate('Login')} />
+            < TouchableOpacity
+              style={{ marginRight: 16 }}
+              onPress={() => logoutDB(dispatch)}
+            >
+              <LogOut />
             </TouchableOpacity>
           ),
+
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (
             <TabIcon icon={FooterGrid} focused={focused} />
           ),
         })}
       />
-      <Tab.Screen
+      < Tab.Screen
         name='CreatePost'
         component={CreatePostsScreen}
         options={({ navigation }) => ({
@@ -76,7 +87,7 @@ const BottomTabNavigator = () => {
           ),
         })}
       />
-      <Tab.Screen
+      < Tab.Screen
         name='Profile'
         component={ProfileScreen}
         options={{
@@ -87,38 +98,48 @@ const BottomTabNavigator = () => {
           ),
         }}
       />
-    </Tab.Navigator>
+
+      {/* <Tab.Screen
+        name='Comment'
+        component={CommentsScreen}
+
+        options={({ navigation }) => ({
+          title: 'Коментарі',
+          tabBarButton: () => null,
+          tabBarStyle: { display: 'none' },
+          headerLeft: ({ }) => (
+            <TouchableOpacity
+              style={{ marginLeft: 16 }}
+              onPress={() => navigation.goBack()}>
+              <GoBack />
+            </TouchableOpacity>
+          )
+        })}
+
+      /> */}
+
+      {/* <Tab.Screen
+        name='Map'
+        component={MapScreen}
+
+        options={({ navigation }) => ({
+          title: 'Карта',
+          tabBarButton: () => null,
+          tabBarStyle: { display: 'none' },
+          headerLeft: ({ }) => (
+            <TouchableOpacity
+              style={{ marginLeft: 16 }}
+              onPress={() => navigation.goBack()}>
+              <GoBack />
+            </TouchableOpacity>
+          ),
+        })}
+      /> */}
+
+    </Tab.Navigator >
   );
 };
 
-const styles = StyleSheet.create({
-  addButton: {
-    width: 70,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: colors.orange,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  iconContainer: {
-    width: 70,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: colors.light_gray,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  focusedContainer: {
-    backgroundColor: colors.orange,
-  },
-  text: {
-    flex: 1,
 
-    textAlign: 'center',
-    fontSize: 16,
-    color: '#333',
-    fontFamily: 'Roboto-Medium',
-  },
-});
 
 export default BottomTabNavigator;

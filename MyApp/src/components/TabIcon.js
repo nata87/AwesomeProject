@@ -1,6 +1,6 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
-import { colors } from "../../styles/global";
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import { colors } from '../../styles/global';
 
 const TabIcon = ({ icon: Icon, focused, outer }) => {
   return (
@@ -14,8 +14,8 @@ const TabIcon = ({ icon: Icon, focused, outer }) => {
 
 const styles = StyleSheet.create({
   iconContainer: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 20,
     marginVertical: 8,
     width: 40,

@@ -1,15 +1,77 @@
-import React from 'react';
-import { View, StyleSheet, Text, Image, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Text, Image, ScrollView, Button } from 'react-native';
 import { colors } from '../../styles/global';
 import imgPublication from '../../assets/images/Content Block.jpg';
 import Avatar from '../components/Avatar';
 import InputField from '../components/InputField';
 import Arrow from '../../assets/icons/Arrow';
+import { useSelector } from 'react-redux';
+import { addComment, getComments } from '../utils/firestore';
 
-export default function CommentsScreen() {
+export default function CommentsScreen({ route }) {
+  const { postId, photoUri } = route.params;
+  console.log("route.params", route.params)
+  const [commentText, setCommentText] = useState('');
+  const [comments, setComments] = useState([]);
+  const user = useSelector(state => state.user.userInfo);
+
+
+  const loadComments = async () => {
+    const fetchedComments = await getComments(postId);
+    setComments(fetchedComments);
+  };
+
+
+  const handleAddComment = async () => {
+    if (commentText.trim()) {
+      const newComment = {
+        userId: user.uid,
+        text: commentText,
+        date: new Date().toLocaleString(),
+      };
+      await addComment(postId, newComment);
+      setCommentText('');
+      loadComments();
+    }
+  };
+
+  useEffect(() => {
+    loadComments();
+  }, [postId]);
   return (
     <>
-      <ScrollView
+      <ScrollView style={styles.wrapper} contentContainerStyle={styles.contentContainer}>
+        <View style={styles.container}>
+          <View style={styles.publicationContainer}>
+            <View style={styles.imageContainer}>
+              <Image source={{ uri: photoUri }} style={styles.image} />
+            </View>
+          </View>
+
+          <View style={styles.commentContainer}>
+            {comments.map((comment, index) => (
+              <View key={index} style={styles.commentWrapper}>
+                <Avatar width={28} height={28} userFoto={require('../../assets/images/Ellipse.jpg')} />
+                <View style={styles.comment}>
+                  <Text style={styles.commentText}>{comment.text}</Text>
+                  <Text style={styles.date}>{comment.date}</Text>
+                </View>
+              </View>
+            ))}
+          </View>
+
+          <InputField
+            placeholder="Коментувати..."
+            value={commentText}
+            onChangeText={setCommentText}
+            isShowButton={true}
+            IconComponent={() => <Arrow onPress={handleAddComment} />}
+            outerStyles={styles.input}
+          />
+
+        </View>
+      </ScrollView>
+      {/* <ScrollView
         style={styles.wrapper}
         contentContainerStyle={styles.contentContainer}
       >
@@ -73,7 +135,7 @@ export default function CommentsScreen() {
             outerStyles={styles.input}
           />
         </View>
-      </ScrollView>
+      </ScrollView> */}
     </>
   );
 }
@@ -114,7 +176,11 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 240,
   },
-  image: { width: '100%', borderRadius: 8 },
+  image: {
+    width: '100%',
+    height: 240,
+    borderRadius: 8
+  },
   commentContainer: {
     gap: 16,
   },

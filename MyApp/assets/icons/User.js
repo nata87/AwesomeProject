@@ -1,19 +1,28 @@
-import * as React from "react";
-import Svg, { SvgProps, Path } from "react-native-svg";
-const LogOut = (props) => (
+import * as React from 'react';
+import Svg, { Path } from 'react-native-svg';
+const User = props => (
   <Svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={24}
-    height={24}
-    fill="none"
+    xmlns='http://www.w3.org/2000/svg'
+    width={40}
+    height={40}
+    fill='none'
     {...props}
   >
     <Path
-      stroke="#BDBDBD"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M10 22H5a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h5M17 16l4-4-4-4M21 12H9"
+      stroke={props.stroke || '#212121'} 
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      strokeOpacity={0.8}
+      d='M28 29v-2a4 4 0 0 0-4-4h-8a4 4 0 0 0-4 4v2'
+    />
+    <Path
+      stroke={props.stroke || '#212121'} 
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      strokeOpacity={0.8}
+      d='M20 19a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z'
     />
   </Svg>
 );
-export default LogOut;
+
+export default User;

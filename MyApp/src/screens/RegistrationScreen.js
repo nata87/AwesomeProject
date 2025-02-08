@@ -13,6 +13,8 @@ import AvatarPlace from '../../src/components/AvatarPlace';
 import bgImage from '../../assets/images/Photo BG.png';
 import { colors } from '../../styles/global';
 import ІconPlus from '../../assets/icons/PlusInCircle';
+import { registerDB } from '../utils/auth';
+import { useDispatch } from 'react-redux';
 
 export default function RegistrationScreen({ route, navigation }) {
   const [formData, setFormdata] = useState({
@@ -20,7 +22,7 @@ export default function RegistrationScreen({ route, navigation }) {
     email: '',
     password: '',
   });
-
+  const dispatch = useDispatch();
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
 
   const showPassword = () => {
@@ -34,18 +36,39 @@ export default function RegistrationScreen({ route, navigation }) {
     }));
   };
   const onLogin = () => {
-    navigation.navigate('Login', {
-      email: formData.email,
-      password: formData.password,
-    });
-  };
-  const onHome = () => {
-    navigation.navigate('Home', {
-      email: formData.email,
-      password: formData.password,
-    });
+    navigation.navigate('Login');
   };
 
+  const validate = () => {
+    if (formData.email.length < 1 && formData.password < 1 && formData.login.length < 1) return false
+
+    return true;
+  }
+
+  const onSignUp = async () => {
+ ;
+    const isValid = validate();
+
+    if (!isValid) {
+      Alert.alert('Помилка!', 'Заповніть всі поля!', [{ text: 'Зрозуміло!' }]);
+      return;
+    }
+
+    try {
+      const user = await registerDB(formData.email, formData.password, formData.login);
+      if (user) {
+        dispatch(setUserInfo({
+          uid: user.uid,
+          email: user.email,
+          displayName: formData.login,
+          profilePhoto: user.photoURL || "",
+        }));
+        navigation.navigate('Home');
+      }
+    } catch (error) {
+      Alert.alert('Помилка реєстрації', error.message, [{ text: 'OK' }]);
+    }
+  };
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.wrapper}>
@@ -77,7 +100,7 @@ export default function RegistrationScreen({ route, navigation }) {
                 showPassword={showPassword}
               />
             </View>
-            <MainButton textButton='Зареєструватися' onPress={onHome} />
+            <MainButton textButton='Зареєструватися' onPress={onSignUp} />
             <Text style={styles.smallText}>
               Вже є аккаунт?
               <TouchableWithoutFeedback onPress={onLogin}>

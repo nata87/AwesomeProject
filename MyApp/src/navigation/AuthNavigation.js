@@ -6,13 +6,32 @@ import BottomTabNavigator from './BottomTabNavigator';
 import { TouchableOpacity } from 'react-native';
 import GoBack from '../../assets/icons/GoBack';
 import MapScreen from '../screens/MapScreen';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
+
+
 
 const Stack = createStackNavigator();
 
 const AuthNavigator = () => {
+  const navigation = useNavigation();
+  const user = useSelector((state) => state.user.userInfo);
+  console.log("USER in auth", user)
+  const initialRouteName = user ? "Home" : "Login";
+
+  useEffect(() => {
+    if (user && user?.uid) {
+      navigation.navigate("Home");
+    } else {
+      navigation.navigate("Login");
+    }
+  }, [user]);
+
+
   return (
     <Stack.Navigator
-      initialRouteName='Login'
+      initialRouteName={initialRouteName}
       screenOptions={{
         headerShown: false,
         headerTitleStyle: {
@@ -43,7 +62,6 @@ const AuthNavigator = () => {
           ),
         })}
       />
-
       <Stack.Screen
         name='Map'
         component={MapScreen}

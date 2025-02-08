@@ -4,10 +4,13 @@ import { colors } from '../../styles/global';
 
 export default function InputField({
   placeholder,
+  value,
   isPasswordVisible,
   isShowButton,
   onChangeText,
   showPassword,
+  IconComponent,
+  outerStyles,
 }) {
   const [isFocused, setIsFocused] = useState(false);
   const onFocus = () => {
@@ -18,10 +21,17 @@ export default function InputField({
   };
 
   return (
-    <View style={[styles.inputContainer, isFocused && styles.focusedInput]}>
+    <View
+      style={[
+        styles.inputContainer,
+        isFocused && styles.focusedInput,
+        outerStyles,
+      ]}
+    >
       <TextInput
         onFocus={onFocus}
         onBlur={onBlur}
+        value={value}
         onChangeText={onChangeText}
         style={styles.input}
         placeholder={placeholder}
@@ -30,9 +40,13 @@ export default function InputField({
       />
       {isShowButton && (
         <Pressable style={styles.button} onPress={showPassword}>
-          <Text style={styles.textShowPassword}>
-            {isPasswordVisible ? 'Показати' : 'Приховати'}
-          </Text>
+          {IconComponent ? (
+            <IconComponent />
+          ) : (
+            <Text style={styles.textShowPassword}>
+              {isPasswordVisible ? 'Показати' : 'Приховати'}
+            </Text>
+          )}
         </Pressable>
       )}
     </View>

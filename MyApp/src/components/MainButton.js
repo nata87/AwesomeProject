@@ -1,6 +1,6 @@
-import React from "react";
-import { Pressable, Text, StyleSheet } from "react-native";
-import { colors } from "../../styles/global";
+import React from 'react';
+import { Pressable, Text, StyleSheet } from 'react-native';
+import { colors } from '../../styles/global';
 
 export default function MainButton({ textButton, onPress, outer, textOuter }) {
   return (
@@ -12,10 +12,10 @@ export default function MainButton({ textButton, onPress, outer, textOuter }) {
 
 const styles = StyleSheet.create({
   button: {
-    width: "100%",
+    width: '100%',
     height: 51,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 43,
     marginBottom: 16,
 
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   },
   textButton: {
     color: colors.white,
-    fontFamily: "Roboto-Regular",
+    fontFamily: 'Roboto-Regular',
     fontSize: 16,
   },
 });

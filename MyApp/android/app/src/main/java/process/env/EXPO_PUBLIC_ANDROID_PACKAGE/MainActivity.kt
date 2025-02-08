@@ -1,4 +1,4 @@
-package com.anonymous.MyApp
+package process.env.EXPO_PUBLIC_ANDROID_PACKAGE
 
 import android.os.Build
 import android.os.Bundle

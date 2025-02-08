@@ -1,5 +1,5 @@
-import { View, StyleSheet, Image } from "react-native";
-import { colors } from "../../styles/global";
+import { View, StyleSheet, Image } from 'react-native';
+import { colors } from '../../styles/global';
 
 export default function Avatar({ width, height, borderRadius = 16, userFoto }) {
   return (
@@ -12,8 +12,8 @@ export default function Avatar({ width, height, borderRadius = 16, userFoto }) {
 const styles = StyleSheet.create({
   avatar: {
     backgroundColor: colors.light_gray,
-    alignItems: "center",
-    justifyContent: "center",
-    overflow: "hidden",
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
   },
 });

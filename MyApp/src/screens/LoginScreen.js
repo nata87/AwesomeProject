@@ -11,12 +11,15 @@ import InputField from '../../src/components/InputField';
 import MainButton from '../../src/components/MainButton';
 import bgImage from '../../assets/images/Photo BG.png';
 import { colors } from '../../styles/global';
+import { useDispatch } from 'react-redux';
+import { loginDB } from '../utils/auth';
 
 export default function LoginScreenScreen({ route, navigation }) {
   const [formData, setFormdata] = useState({
     email: '',
     password: '',
   });
+  const dispatch = useDispatch()
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
 
@@ -33,17 +36,23 @@ export default function LoginScreenScreen({ route, navigation }) {
 
   const onSignUp = () => {
     navigation.navigate('SignUp', {
-      email: formData.email,
-      password: formData.password,
+
     });
+  };
+  const onSignIn = async () => {
+
+    try {
+      const user = await loginDB(formData, dispatch);
+      if (user) {
+        navigation.navigate('Home');
+      } else {
+        Alert.alert('Помилка входу', 'Невірний email або пароль', [{ text: 'OK' }]);
+      }
+    } catch (error) {
+      Alert.alert('Помилка входу', error.message, [{ text: 'OK' }]);
+    }
   };
 
-  const onHome = () => {
-    navigation.navigate('Home', {
-      email: formData.email,
-      password: formData.password,
-    });
-  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -70,7 +79,7 @@ export default function LoginScreenScreen({ route, navigation }) {
                 showPassword={showPassword}
               />
             </View>
-            <MainButton textButton='Увійти' onPress={onHome} />
+            <MainButton textButton='Увійти' onPress={onSignIn} />
             <Text style={styles.smallText}>
               Немає акаунту?
               <TouchableWithoutFeedback onPress={onSignUp}>

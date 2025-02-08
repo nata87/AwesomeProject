@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -21,20 +21,40 @@ import LocationIcon from '../../assets/icons/LocationIcon';
 import LogOut from '../../assets/icons/LogOut';
 import IconPlus from '../../assets/icons/PlusInCircle';
 import avatar from '../../assets/images/avatar.jpg';
+import { logoutDB } from '../utils/auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPostsByUserId } from '../utils/firestore';
 
-export default function ProfileScreen({ route, navigation }) {
-  const onLogin = () => {
-    navigation.navigate('Login');
+export default function ProfileScreen({ navigation }) {
+  const [posts, setPosts] = useState([]);
+  const user = useSelector(state => state.user.userInfo);
+  console.log("USER in profile", user)
+
+  const dispatch = useDispatch();
+  const onComment = (id) => {
+    navigation.navigate('Comment', { postId: id });
   };
-  const onComment = () => {
-    navigation.navigate('Comment');
+
+  const onMap = (latitude, longitude) => {
+    navigation.navigate('Map', { latitude, longitude })
   };
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const allPosts = await getPostsByUserId(user.uid);
+      setPosts(allPosts);
+    };
+
+    fetchPosts();
+  }, [user.uid]);
+
+  const { name: displayName } = user || {};
+  console.log("USER", user)
+
   return (
     <ScrollView
       style={styles.wrapper}
-      contentContainerStyle={styles.contentContainer}
     >
-      <ImageBackground source={bgImage} resizeMode='cover' style={styles.image}>
+      <ImageBackground source={bgImage} resizeMode='cover' style={styles.imageBG}>
         <View style={styles.containerProfile}>
           <AvatarPlace
             icon={
@@ -51,84 +71,32 @@ export default function ProfileScreen({ route, navigation }) {
           />
 
           <View style={styles.iconLogOut}>
-            <LogOut onPress={onLogin} />
+            <LogOut onPress={() => logoutDB(dispatch)} />
           </View>
-          <Text style={styles.titleText}>Natali Romanova</Text>
-          <View style={styles.cardContainer}>
-            <View style={styles.imageContainer}>
-              <Image source={img1} style={styles.image}></Image>
-            </View>
-            <Text style={styles.smallText}>Ліс</Text>
-            <View style={styles.detailsContainer}>
-              <View style={styles.details}>
-                <View style={styles.comment}>
-                  <TouchableOpacity onPress={onComment}>
-                    <Comment />
+          <Text style={styles.titleText}>{displayName}</Text>
+          {posts.length > 0 ? (
+            posts.map(post => (
+              <View key={post.id} style={styles.cardContainer}>
+                <View style={styles.imageContainer}>
+                  <Image source={{ uri: post.photoUri }} style={styles.imagePost} />
+                </View>
+                <Text style={styles.smallText}>{post.titlePhoto}</Text>
+                <View style={styles.detailsContainer}>
+                  <TouchableOpacity onPress={() => onComment(post.id)} style={styles.comment}>
+                    <Comment fill='none' stroke={colors.border_gray} />
+                    <Text>0</Text>
                   </TouchableOpacity>
-                  <Text>8</Text>
-                </View>
-                <View style={styles.comment}>
-                  <Like />
-                  <Text>153</Text>
-                </View>
-              </View>
-
-              <View style={styles.comment}>
-                <LocationIcon />
-                <Text>Ukraine</Text>
-              </View>
-            </View>
-          </View>
-          <View style={styles.cardContainer}>
-            <View style={styles.imageContainer}>
-              <Image source={img2} style={styles.image}></Image>
-            </View>
-            <Text style={styles.smallText}>Захід на Чорному морі</Text>
-            <View style={styles.detailsContainer}>
-              <View style={styles.details}>
-                <View style={styles.comment}>
-                  <TouchableOpacity onPress={onComment}>
-                    <Comment />
+                  <TouchableOpacity onPress={() => onMap(post.latitude, post.longitude)} style={styles.comment}>
+                    <LocationIcon />
+                    <Text style={styles.textLocation}>{post.locationName}</Text>
                   </TouchableOpacity>
-                  <Text>3</Text>
-                </View>
-                <View style={styles.comment}>
-                  <Like />
-                  <Text>200</Text>
                 </View>
               </View>
+            ))
+          ) : (
+            <Text>Немає постів</Text>
+          )}
 
-              <View style={styles.comment}>
-                <LocationIcon />
-                <Text>Ukraine</Text>
-              </View>
-            </View>
-          </View>
-          <View style={styles.cardContainer}>
-            <View style={styles.imageContainer}>
-              <Image source={img3} style={styles.image}></Image>
-            </View>
-            <Text style={styles.smallText}>Старий будиночок у Венеції</Text>
-            <View style={styles.detailsContainer}>
-              <View style={styles.details}>
-                <View style={styles.comment}>
-                  <TouchableOpacity onPress={onComment}>
-                    <Comment />
-                  </TouchableOpacity>
-                  <Text>50</Text>
-                </View>
-                <View style={styles.comment}>
-                  <Like />
-                  <Text>200</Text>
-                </View>
-              </View>
-
-              <View style={styles.comment}>
-                <LocationIcon />
-                <Text>Italy</Text>
-              </View>
-            </View>
-          </View>
         </View>
       </ImageBackground>
     </ScrollView>
@@ -138,13 +106,14 @@ export default function ProfileScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
+    backgroundColor: 'white',
   },
-  //   contentContainer: { flexGrow: 1 },
+
   containerProfile: {
     position: 'relative',
     alignItems: 'center',
+
     marginTop: 147,
-    width: '100%',
 
     paddingLeft: 16,
     paddingRight: 16,
@@ -184,11 +153,16 @@ const styles = StyleSheet.create({
     width: '100%',
     gap: 8,
     marginTop: 32,
+
   },
   imageContainer: {
     height: 240,
   },
-  image: { width: '100%', borderRadius: 8 },
+  imagePost: {
+    width: '100%',
+    height: 240,
+    borderRadius: 8
+  },
   commentContainer: {
     gap: 16,
   },
